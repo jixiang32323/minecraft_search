@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft 版本索引 · 多源加速</title>
+<style>
+  :root {
+    --bg: #0d1117; --bg-elev: #161b22; --bg-hover: #1f2630;
+    --border: #262d38; --border-strong: #3a4453;
+    --text: #e6edf3; --text-dim: #8b949e; --text-faint: #5c6672;
+    --accent: #55c065; --accent-dim: #2ea043;
+    --blue: #58a6ff; --orange: #e3b341; --gray: #7d8590;
+    --radius: 10px;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header { border-bottom: 1px solid var(--border); background: var(--bg-elev); position: sticky; top: 0; z-index: 10; }
+  .header-inner { max-width: 1440px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: .3px; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--accent-dim)); display: grid; place-items: center; font-size: 14px; color: #0d1117; font-weight: 900; }
+  .badge-source { margin-left: auto; font-size: 12px; color: var(--text-dim); background: rgba(85,192,101,.1); border: 1px solid rgba(85,192,101,.3); padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; }
+  .badge-source::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+  .notice { max-width: 1440px; margin: 16px auto 0; padding: 0 24px; width: 100%; }
+  .notice-box { background: linear-gradient(90deg, rgba(88,166,255,.08), rgba(88,166,255,.02)); border: 1px solid rgba(88,166,255,.25); border-left: 3px solid var(--blue); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #b8c7d9; }
+  .notice-box strong { color: var(--text); }
+  .disclaimer-link { margin-left: 8px; color: var(--blue); font-weight: 600; white-space: nowrap; }
+
+  main { flex: 1; width: 100%; max-width: 1440px; margin: 0 auto; padding: 20px 24px 40px; display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+
+  .sidebar { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; max-height: calc(100vh - 160px); overflow: hidden; position: sticky; top: 90px; }
+  @media (max-width: 900px) { .sidebar { position: static; max-height: none; } }
+  .sidebar-head { padding: 14px 14px 10px; border-bottom: 1px solid var(--border); }
+  .search-wrap { position: relative; }
+  .search-wrap input { width: 100%; padding: 9px 12px 9px 34px; background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); border-radius: 8px; font-size: 13px; outline: none; }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-faint); font-size: 13px; pointer-events: none; }
+  .filters { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .filter-btn { background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); border-radius: 999px; padding: 4px 11px; font-size: 12px; cursor: pointer; }
+  .filter-btn.active { background: rgba(85,192,101,.15); border-color: var(--accent); color: var(--accent); }
+  .version-list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; flex: 1; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+  .version-item { padding: 9px 11px; border-radius: 7px; cursor: pointer; display: flex; align-items: center; gap: 9px; border: 1px solid transparent; }
+  .version-item:hover { background: var(--bg-hover); }
+  .version-item.selected { background: rgba(85,192,101,.1); border-color: rgba(85,192,101,.35); }
+  .v-id { font-family: var(--mono); font-size: 13px; font-weight: 600; }
+  .v-type { font-size: 10px; padding: 1px 7px; border-radius: 999px; text-transform: uppercase; letter-spacing: .4px; font-weight: 700; margin-left: auto; }
+  .v-type.release { background: rgba(85,192,101,.15); color: var(--accent); }
+  .v-type.snapshot { background: rgba(227,179,65,.15); color: var(--orange); }
+  .v-type.old_beta { background: rgba(88,166,255,.15); color: var(--blue); }
+  .v-type.old_alpha { background: rgba(125,133,144,.15); color: var(--gray); }
+  .v-latest-star { color: var(--orange); font-size: 12px; }
+
+  .detail { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); min-height: 400px; padding: 24px; }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 380px; color: var(--text-dim); text-align: center; gap: 8px; }
+  .empty-state .icon { font-size: 44px; opacity: .5; }
+  .empty-state h2 { margin: 0; font-size: 16px; color: var(--text); }
+  .detail-head { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .detail-title { font-size: 22px; font-weight: 700; font-family: var(--mono); }
+  .detail-meta { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .detail-meta span + span::before { content: " · "; color: var(--text-faint); }
+  .section { margin-top: 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-dim); font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .section-count { background: var(--bg-hover); color: var(--text-faint); padding: 0 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .dl-card { display: flex; align-items: center; gap: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 13px 16px; margin-bottom: 8px; }
+  .dl-icon { width: 34px; height: 34px; border-radius: 8px; background: rgba(85,192,101,.12); color: var(--accent); display: grid; place-items: center; font-size: 15px; flex-shrink: 0; }
+  .dl-info { flex: 1; min-width: 0; }
+  .dl-name { font-weight: 600; font-size: 14px; }
+  .dl-sub { font-size: 11px; color: var(--text-faint); font-family: var(--mono); word-break: break-all; }
+  .dl-btn { background: var(--accent); color: #07130a; border: none; border-radius: 7px; padding: 7px 16px; font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+  .dl-btn:hover { background: var(--accent-dim); }
+  .lib-list { max-height: 420px; overflow-y: auto; border-radius: 9px; }
+  .lib-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; font-size: 12px; }
+  .lib-item:hover { background: var(--bg-hover); }
+  .lib-name { font-family: var(--mono); color: var(--text-dim); flex: 1; word-break: break-all; }
+  .lib-dl { background: transparent; color: var(--blue); border: 1px solid rgba(88,166,255,.35); border-radius: 6px; padding: 3px 10px; font-size: 11px; cursor: pointer; }
+
+  .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--border-strong); border-top-color: var(--accent); animation: spin .7s linear infinite; margin: 0 auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-block { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; gap: 14px; color: var(--text-dim); font-size: 13px; }
+  .error-box { background: rgba(248,81,73,.08); border: 1px solid rgba(248,81,73,.3); border-left: 3px solid #f85149; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #ffb3ae; }
+  .error-box .retry { margin-top: 10px; background: transparent; color: #ffb3ae; border: 1px solid rgba(248,81,73,.4); border-radius: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; }
+
+  footer { border-top: 1px solid var(--border); background: var(--bg-elev); padding: 18px 24px; font-size: 12px; color: var(--text-faint); text-align: center; line-height: 1.8; }
+  footer strong { color: var(--text-dim); }
+  footer .sep { color: var(--border-strong); margin: 0 6px; }
+  .footer-meta { margin-top: 4px; }
+  .support-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px dashed var(--border); }
+  .afdian-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 26px; border-radius: 999px; background: linear-gradient(135deg, #946ce6, #7b5cd6); color: #fff !important; font-size: 14px; font-weight: 700; text-decoration: none !important; box-shadow: 0 4px 14px rgba(148,108,230,.35); transition: transform .18s, box-shadow .18s; }
+  .afdian-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(148,108,230,.5); }
+  .afdian-ico { font-size: 15px; }
+  .support-tip { margin: 0; font-size: 12px; color: var(--text-faint); }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 200; opacity: 0; visibility: hidden; transition: opacity .22s, visibility .22s; }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal { background: var(--bg-elev); border: 1px solid var(--border-strong); border-radius: 12px; width: 100%; max-width: 720px; max-height: 82vh; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,.7); transform: translateY(18px) scale(.98); transition: transform .22s; }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .modal-head h2 { margin: 0; font-size: 16px; font-weight: 700; }
+  .modal-close { background: transparent; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+  .modal-close:hover { background: var(--bg-hover); color: var(--text); }
+  .modal-body { padding: 20px 22px; overflow-y: auto; font-size: 13px; line-height: 1.75; color: var(--text-dim); scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+  .modal-body::-webkit-scrollbar { width: 8px; }
+  .modal-body::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+  .modal-updated { margin: 0 0 14px; font-size: 11px; color: var(--text-faint); font-family: var(--mono); }
+  .modal-body h3 { font-size: 13px; font-weight: 700; color: var(--text); margin: 20px 0 6px; padding-left: 10px; border-left: 3px solid var(--accent); }
+  .modal-body h3:first-of-type { margin-top: 0; }
+  .modal-body p { margin: 0 0 10px; }
+  .modal-body strong { color: var(--text); }
+  .modal-final { margin-top: 22px !important; padding: 12px 14px; background: rgba(248,81,73,.06); border: 1px solid rgba(248,81,73,.2); border-left: 3px solid #f85149; border-radius: 7px; color: #ffb3ae; font-size: 12.5px; }
+  .modal-foot { padding: 14px 22px; border-top: 1px solid var(--border); background: var(--bg); border-radius: 0 0 12px 12px; display: none; justify-content: center; flex-shrink: 0; }
+  .modal-foot.show { display: flex; }
+  .modal-agree { background: var(--accent); color: #07130a; border: none; border-radius: 8px; padding: 10px 32px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; }
+  .modal-agree:hover { background: var(--accent-dim); }
+  .modal-agree:active { transform: scale(.97); }
+  @media (max-width: 600px) { .modal-head, .modal-body, .modal-foot { padding-left: 16px; padding-right: 16px; } .modal { max-height: 88vh; } }
+
+  #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg-hover); color: var(--text); border: 1px solid var(--border-strong); padding: 10px 20px; border-radius: 8px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.4); opacity: 0; transition: all .25s; pointer-events: none; z-index: 100; }
+  #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .modal, .modal-overlay, #toast { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><div class="logo-mark">M</div><span>Minecraft 版本索引</span></div>
+    <span class="badge-source" id="sourceBadge">多源加速</span>
+  </div>
+</header>
+
+<div class="notice">
+  <div class="notice-box">
+    <strong>版权提示：</strong>《我的世界》游戏版权归 Mojang AB 所有。本站仅提供由 BMCLAPI 加速的下载链接，<strong>请确保您已通过官方渠道购买正版授权</strong>。下载加速由 <a href="https://bmclapi2.bangbang93.com" target="_blank" rel="noopener">BMCLAPI</a> 提供。
+    <a href="#" id="openDisclaimer" class="disclaimer-link">查看完整免责声明 ›</a>
+  </div>
+</div>
+
+<main>
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="search" placeholder="搜索版本号，如 1.20 / 23w31a" autocomplete="off">
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="release">正式版</button>
+        <button class="filter-btn" data-filter="snapshot">快照</button>
+        <button class="filter-btn" data-filter="old">远古</button>
+      </div>
+    </div>
+    <ul class="version-list" id="versionList">
+      <li class="loading-block"><div class="spinner"></div>正在连接镜像源…</li>
+    </ul>
+  </aside>
+
+  <section class="detail" id="detail">
+    <div class="empty-state">
+      <div class="icon">⛏️</div>
+      <h2>请选择一个版本</h2>
+      <p>从左侧列表中选择版本以查看可下载的文件</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="support-wrap">
+    <a class="afdian-btn" href="https://afdian.com/a/xiaoxin_minecraft" target="_blank" rel="noopener noreferrer" title="如果本站对你有帮助，欢迎请我喝杯咖啡 ☕">
+      <span class="afdian-ico">⚡</span><span>为爱发电</span>
+    </a>
+    <p class="support-tip">如果这个站点帮你省下了找资源的时间，可以请我喝杯咖啡 ☕</p>
+  </div>
+  <div class="footer-meta">
+    <strong>数据来源：</strong>BMCLAPI / HKMC
+    <span class="sep">|</span>
+    <strong>游戏版权：</strong>Mojang AB / Microsoft
+  </div>
+  <div class="footer-meta">本页面仅作为正版用户的下载加速辅助工具，不存储任何游戏文件。</div>
+</footer>
+
+<div id="toast"></div>
+
+<div class="modal-overlay" id="disclaimerModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
+    <div class="modal-head">
+      <h2 id="disclaimerTitle">⚖️ 免责声明</h2>
+      <button class="modal-close" id="closeDisclaimer" aria-label="关闭">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-updated">最后更新：2025 年 10 月</p>
+      <h3>一、版权归属</h3>
+      <p>《我的世界》（Minecraft）及其所有相关素材、游戏文件、商标的著作权与所有权均归 <strong>Mojang AB</strong> 及其母公司 <strong>Microsoft Corporation</strong> 所有。本站与 Mojang AB、Microsoft Corporation 无任何隶属、合作或授权关系。</p>
+      <h3>二、服务性质</h3>
+      <p>本站是一个<strong>版本信息索引与下载加速辅助工具</strong>，自身<strong>不存储、不托管、不修改</strong>任何游戏二进制文件。页面展示的下载链接由第三方公益镜像 BMCLAPI 提供，本站仅对其公开元数据进行聚合与展示。</p>
+      <h3>三、正版要求</h3>
+      <p>本站<strong>仅面向已通过官方渠道购买正版授权的用户</strong>提供服务。使用者应自行确保其对《我的世界》拥有合法授权。任何未经授权下载、使用、传播游戏文件的行为，均可能违反《中华人民共和国著作权法》及 Mojang 最终用户许可协议（EULA），由此产生的一切法律责任由使用者自行承担。</p>
+      <h3>四、第三方链接</h3>
+      <p>本站页面可能包含指向第三方网站（如 BMCLAPI、爱发电等）的链接。这些链接仅为方便用户而提供，本站<strong>不对第三方网站的内容、可用性、安全性或合法性承担任何责任</strong>。访问第三方网站所产生的风险由用户自行承担。</p>
+      <h3>五、使用风险</h3>
+      <p>本站按"现状"（AS IS）提供服务，不对下载文件的完整性、安全性、适用性作任何明示或暗示的担保。因使用本站或依赖其提供的信息而导致的任何直接或间接损失（包括但不限于设备损坏、数据丢失、账号封禁），本站及开发者<strong>不承担任何责任</strong>。</p>
+      <h3>六、开源声明</h3>
+      <p>本站源代码仅供学习与技术交流。任何个人或组织基于本项目的代码进行部署、修改或再分发时，<strong>应自行确保其行为符合所在地区的法律法规</strong>。因部署者自身行为产生的法律责任，由部署者自行承担，与项目原作者无关。</p>
+      <h3>七、声明修改</h3>
+      <p>本站保留随时修改本免责声明的权利，修改后的条款自发布之日起生效。使用者继续使用本站服务，即视为接受修改后的条款。</p>
+      <p class="modal-final">如您对本声明有任何异议，请立即停止使用本站服务。</p>
+    </div>
+    <div class="modal-foot" id="modalFoot">
+      <button class="modal-agree" id="agreeDisclaimer">我已知晓并继续使用</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  // 镜像源列表：优先使用 BMCLAPI 官方源，失效时自动切换至 HKMC 镜像
+  const MIRRORS = [
+    'https://bmclapi2.bangbang93.com',
+    'https://bsmirror.hkmc.online',
+    'https://mirror.hkmc.online'
+  ];
+  let activeMirror = MIRRORS[0];
+  const DISCLAIMER_KEY = 'mc_disclaimer_agreed_v1';
+
+  const state = {
+    versions: [], filter: 'all', keyword: '', selectedId: null,
+    detailCache: new Map(), latest: { release: '', snapshot: '' },
+  };
+
+  const TYPE_LABEL = { release: '正式版', snapshot: '快照', old_beta: '远古 Beta', old_alpha: '远古 Alpha' };
+  const $ = (id) => document.getElementById(id);
+  const versionListEl = $('versionList');
+  const detailEl = $('detail');
+  const searchEl = $('search');
+  const filtersEl = $('filters');
+  const sourceBadge = $('sourceBadge');
+
+  function toMirrorUrl(u) {
+    if (!u) return '';
+    // 将 Mojang 官方 URL 重写为当前激活的镜像 URL
+    const officialDomains = [
+      'https://launchermeta.mojang.com/',
+      'https://launcher.mojang.com/',
+      'https://piston-meta.mojang.com/',
+      'https://resources.download.minecraft.net/',
+      'https://libraries.minecraft.net/',
+      'https://files.minecraftforge.net/maven/',
+      'https://maven.minecraftforge.net/',
+      'https://maven.neoforged.net/releases/'
+    ];
+    for (const d of officialDomains) {
+      if (u.startsWith(d)) {
+        let path = u.replace(d, '');
+        if (d.includes('resources.download.minecraft.net')) return `${activeMirror}/assets/${path}`;
+        if (d.includes('maven') || d.includes('forge')) return `${activeMirror}/maven/${path}`;
+        return `${activeMirror}/${path}`;
+      }
+    }
+    return u; // 如果是已经是镜像 URL 或未知域名，原样返回
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function basename(u) { try { return decodeURIComponent(new URL(u).pathname.split('/').pop() || 'file'); } catch { return 'file'; } }
+  function toast(msg) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2200); }
+
+  // 带重试机制的 fetch
+  async function robustFetch(endpointPath) {
+    let lastErr;
+    for (const mirror of MIRRORS) {
+      try {
+        const url = `${mirror}${endpointPath}`;
+        const resp = await fetch(url, { signal: AbortSignal.timeout(8000) });
+        if (resp.ok) {
+          activeMirror = mirror; // 记录成功的镜像源
+          sourceBadge.textContent = mirror.includes('bangbang93') ? 'BMCLAPI 加速' : 'HKMC 加速';
+          return resp;
+        }
+        throw new Error('HTTP ' + resp.status);
+      } catch (e) {
+        lastErr = e;
+        console.warn(`[镜像失败] ${mirror}:`, e.message);
+      }
+    }
+    throw new Error(`所有镜像均不可用 (${lastErr.message})`);
+  }
+
+  async function getManifest() {
+    const resp = await robustFetch('/mc/game/version_manifest_v2.json');
+    return await resp.json();
+  }
+
+  async function getVersionDetail(id) {
+    const entry = state.versions.find(v => v.id === id);
+    if (!entry || !entry.url) throw new Error('版本不存在');
+    
+    // 获取版本 JSON
+    const resp = await robustFetch(new URL(entry.url).pathname);
+    const meta = await resp.json();
+
+    return {
+      id, type: entry.type,
+      downloads: {
+        client: meta.downloads?.client?.url ? toMirrorUrl(meta.downloads.client.url) : null,
+        server: meta.downloads?.server?.url ? toMirrorUrl(meta.downloads.server.url) : null,
+      },
+      assetIndex: meta.assetIndex?.url ? { url: toMirrorUrl(meta.assetIndex.url), id: meta.assetIndex.id } : null,
+      libraries: (meta.libraries || [])
+        .map(l => ({ name: l.name, url: l.downloads?.artifact?.url ? toMirrorUrl(l.downloads.artifact.url) : null }))
+        .filter(l => l.url),
+    };
+  }
+
+  function renderList() {
+    const kw = state.keyword.trim().toLowerCase();
+    const filtered = state.versions.filter(v => {
+      if (kw && !v.id.toLowerCase().includes(kw)) return false;
+      if (state.filter === 'all') return true;
+      if (state.filter === 'old') return v.type === 'old_beta' || v.type === 'old_alpha';
+      return v.type === state.filter;
+    });
+    if (!filtered.length) { versionListEl.innerHTML = `<li class="loading-block" style="min-height:120px">没有匹配的版本</li>`; return; }
+    versionListEl.innerHTML = filtered.map(v => {
+      const isLatest = v.id === state.latest.release || v.id === state.latest.snapshot;
+      const sel = v.id === state.selectedId ? ' selected' : '';
+      return `<li class="version-item${sel}" data-id="${escapeHtml(v.id)}">
+        <span class="v-id">${escapeHtml(v.id)}</span>
+        ${isLatest ? '<span class="v-latest-star">★</span>' : ''}
+        <span class="v-type ${v.type}">${TYPE_LABEL[v.type] || v.type}</span>
+      </li>`;
+    }).join('');
+  }
+
+  function renderLoading() { detailEl.innerHTML = `<div class="loading-block"><div class="spinner"></div>正在获取版本详情…</div>`; }
+  function renderError(msg, id) {
+    detailEl.innerHTML = `<div class="error-box">
+      <div>加载版本 <code>${escapeHtml(id)}</code> 失败：${escapeHtml(msg)}</div>
+      <button class="retry" id="retryBtn">重新加载</button>
+    </div>`;
+    $('retryBtn')?.addEventListener('click', () => loadDetail(id, true));
+  }
+  function dlCard(icon, title, sub, url, downloadName) {
+    return `<div class="dl-card">
+      <div class="dl-icon">${icon}</div>
+      <div class="dl-info"><div class="dl-name">${escapeHtml(title)}</div><div class="dl-sub">${escapeHtml(sub)}</div></div>
+      <a class="dl-btn" href="${url}" download="${encodeURIComponent(downloadName)}">下载</a>
+    </div>`;
+  }
+  function renderDetail(v) {
+    const libs = (v.libraries || []).filter(l => l.url);
+    const head = `<div class="detail-head">
+      <div style="flex:1;min-width:0">
+        <div class="detail-title">${escapeHtml(v.id)}</div>
+        <div class="detail-meta">
+          <span>${TYPE_LABEL[v.type] || v.type}</span>
+          <span>库文件 ${libs.length} 个</span>
+          ${v.assetIndex?.id ? `<span>资源索引 ${escapeHtml(v.assetIndex.id)}</span>` : ''}
+        </div>
+      </div>
+      <span class="v-type ${v.type}">${TYPE_LABEL[v.type] || v.type}</span>
+    </div>`;
+    let core = '';
+    if (v.downloads?.client) core += dlCard('🎮', '客户端 Client', basename(v.downloads.client), v.downloads.client, `client-${v.id}.jar`);
+    if (v.downloads?.server) core += dlCard('🖥️', '服务端 Server', basename(v.downloads.server), v.downloads.server, `server-${v.id}.jar`);
+    if (!core) core = `<div class="error-box">该版本未提供客户端/服务端下载。</div>`;
+
+    let asset = '';
+    if (v.assetIndex?.url) asset = dlCard('📦', `资源索引 ${escapeHtml(v.assetIndex.id || '')}`, basename(v.assetIndex.url), v.assetIndex.url, `assets-${v.id}.json`);
+
+    let libHtml = '';
+    if (libs.length) {
+      libHtml = `<div class="lib-list">${libs.map(l => `
+        <div class="lib-item">
+          <span class="lib-name">${escapeHtml(l.name || basename(l.url))}</span>
+          <a class="lib-dl" href="${l.url}" download="${encodeURIComponent(basename(l.url))}">下载</a>
+        </div>`).join('')}</div>`;
+    } else {
+      libHtml = `<div style="color:var(--text-faint);font-size:12px">无库文件</div>`;
+    }
+
+    detailEl.innerHTML = `${head}
+      <div class="section"><div class="section-title">游戏本体</div>${core}</div>
+      ${asset ? `<div class="section"><div class="section-title">资源索引</div>${asset}</div>` : ''}
+      <div class="section"><div class="section-title">库文件 <span class="section-count">${libs.length}</span></div>${libHtml}</div>`;
+  }
+
+  async function loadVersions() {
+    try {
+      const data = await getManifest();
+      state.versions = data.versions || [];
+      state.latest = data.latest || { release: '', snapshot: '' };
+      renderList();
+    } catch (e) {
+      versionListEl.innerHTML = `<li class="loading-block" style="min-height:160px;color:#ffb3ae;text-align:center;padding:20px;">
+        版本列表加载失败<br><span style="font-size:11px;opacity:0.8;">${escapeHtml(e.message)}</span><br>
+        <button class="retry" onclick="location.reload()" style="margin-top:10px;background:transparent;color:#ffb3ae;border:1px solid rgba(248,81,73,.4);border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">重试</button>
+      </li>`;
+    }
+  }
+
+  async function loadDetail(id, force) {
+    state.selectedId = id; renderList();
+    if (!force && state.detailCache.has(id)) { renderDetail(state.detailCache.get(id)); return; }
+    renderLoading();
+    try {
+      const detail = await getVersionDetail(id);
+      state.detailCache.set(id, detail);
+      if (state.selectedId === id) renderDetail(detail);
+    } catch (e) {
+      if (state.selectedId === id) renderError(e.message, id);
+    }
+  }
+
+  versionListEl.addEventListener('click', e => {
+    const item = e.target.closest('.version-item');
+    if (item && item.dataset.id !== state.selectedId) loadDetail(item.dataset.id);
+  });
+  let searchTimer;
+  searchEl.addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { state.keyword = e.target.value; renderList(); }, 120);
+  });
+  filtersEl.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn'); if (!btn) return;
+    filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.filter = btn.dataset.filter;
+    renderList();
+  });
+  detailEl.addEventListener('click', e => {
+    if (e.target.closest('a.dl-btn, a.lib-dl')) toast('已开始下载');
+  });
+
+  function initDisclaimer() {
+    const modal = $('disclaimerModal');
+    const openBtn = $('openDisclaimer');
+    const closeBtn = $('closeDisclaimer');
+    const agreeBtn = $('agreeDisclaimer');
+    const foot = $('modalFoot');
+    if (!modal) return;
+    let lastFocused = null;
+
+    function open(auto) {
+      lastFocused = document.activeElement;
+      if (foot) foot.classList.toggle('show', !!auto);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      (auto ? agreeBtn : closeBtn)?.focus();
+    }
+    function close(record) {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (record) { try { localStorage.setItem(DISCLAIMER_KEY, '1'); } catch {} }
+      lastFocused?.focus();
+    }
+
+    openBtn?.addEventListener('click', e => { e.preventDefault(); open(false); });
+    closeBtn?.addEventListener('click', () => close(true));
+    agreeBtn?.addEventListener('click', () => close(true));
+    modal.addEventListener('click', e => { if (e.target === modal) close(true); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) close(true);
+    });
+
+    let agreed = false;
+    try { agreed = localStorage.getItem(DISCLAIMER_KEY) === '1'; } catch {}
+    if (!agreed) setTimeout(() => open(true), 350);
+  }
+
+  initDisclaimer();
+  loadVersions();
+})();
+</script>
+</body>
+</html>
