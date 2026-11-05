@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minecraft 版本索引 · 多源加速</title>
+<title>Minecraft Java 版下载 · 多源加速</title>
+<meta name="description" content="Minecraft Java 版全版本客户端、服务端、资源索引、库文件高速下载，由 BMCLAPI 多源加速。">
+<meta name="keywords" content="Minecraft,我的世界,Java版,版本下载,BMCLAPI,客户端,服务端">
+<meta property="og:title" content="Minecraft Java 版下载 · 多源加速">
+<meta property="og:description" content="全版本客户端、服务端、资源索引、库文件高速下载">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2355c065'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%230d1117' font-family='monospace' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E">
 <style>
   :root {
     --bg: #0d1117; --bg-elev: #161b22; --bg-hover: #1f2630;
@@ -19,22 +25,19 @@
   body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
   a { color: var(--blue); text-decoration: none; }
   a:hover { text-decoration: underline; }
-
   header { border-bottom: 1px solid var(--border); background: var(--bg-elev); position: sticky; top: 0; z-index: 10; }
   .header-inner { max-width: 1440px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: .3px; }
   .logo-mark { width: 26px; height: 26px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--accent-dim)); display: grid; place-items: center; font-size: 14px; color: #0d1117; font-weight: 900; }
-  .badge-source { margin-left: auto; font-size: 12px; color: var(--text-dim); background: rgba(85,192,101,.1); border: 1px solid rgba(85,192,101,.3); padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .badge-source { font-size: 12px; color: var(--text-dim); background: rgba(85,192,101,.1); border: 1px solid rgba(85,192,101,.3); padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; }
   .badge-source::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-
-  .notice { max-width: 1440px; margin: 16px auto 0; padding: 0 24px; width: 100%; }
-  .notice-box { background: linear-gradient(90deg, rgba(88,166,255,.08), rgba(88,166,255,.02)); border: 1px solid rgba(88,166,255,.25); border-left: 3px solid var(--blue); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #b8c7d9; }
+  .notice { max-width: 1440px; margin: 10px auto 0; padding: 0 24px; width: 100%; }
+  .notice-box { background: rgba(88,166,255,.05); border: 1px solid rgba(88,166,255,.18); border-radius: 8px; padding: 8px 14px; font-size: 12px; color: #9fb0c4; line-height: 1.55; }
   .notice-box strong { color: var(--text); }
   .disclaimer-link { margin-left: 8px; color: var(--blue); font-weight: 600; white-space: nowrap; }
-
   main { flex: 1; width: 100%; max-width: 1440px; margin: 0 auto; padding: 20px 24px 40px; display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
   @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
-
   .sidebar { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; max-height: calc(100vh - 160px); overflow: hidden; position: sticky; top: 90px; }
   @media (max-width: 900px) { .sidebar { position: static; max-height: none; } }
   .sidebar-head { padding: 14px 14px 10px; border-bottom: 1px solid var(--border); }
@@ -55,9 +58,7 @@
   .v-type.snapshot { background: rgba(227,179,65,.15); color: var(--orange); }
   .v-type.old_beta { background: rgba(88,166,255,.15); color: var(--blue); }
   .v-type.old_alpha { background: rgba(125,133,144,.15); color: var(--gray); }
-  .v-latest-star { color: var(--orange); font-size: 12px; }
-
-  .detail { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); min-height: 400px; padding: 24px; }
+  .v-latest-star { color: var(--orange); font-size: 12px; }  .detail { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); min-height: 400px; padding: 24px; }
   .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 380px; color: var(--text-dim); text-align: center; gap: 8px; }
   .empty-state .icon { font-size: 44px; opacity: .5; }
   .empty-state h2 { margin: 0; font-size: 16px; color: var(--text); }
@@ -68,31 +69,50 @@
   .section { margin-top: 24px; }
   .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-dim); font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
   .section-count { background: var(--bg-hover); color: var(--text-faint); padding: 0 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-  .dl-card { display: flex; align-items: center; gap: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 13px 16px; margin-bottom: 8px; }
+  .dl-card { display: flex; align-items: center; gap: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 13px 16px; margin-bottom: 8px; flex-wrap: wrap; }
   .dl-icon { width: 34px; height: 34px; border-radius: 8px; background: rgba(85,192,101,.12); color: var(--accent); display: grid; place-items: center; font-size: 15px; flex-shrink: 0; }
-  .dl-info { flex: 1; min-width: 0; }
+  .dl-info { flex: 1; min-width: 160px; }
   .dl-name { font-weight: 600; font-size: 14px; }
   .dl-sub { font-size: 11px; color: var(--text-faint); font-family: var(--mono); word-break: break-all; }
-  
-  /* 按钮状态样式 */
+  .dl-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+  .dl-progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 8px; flex-basis: 100%; display: none; }
+  .dl-progress.show { display: block; }
+  .dl-progress > div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dim)); width: 0; transition: width .15s; }
   .dl-btn { background: var(--accent); color: #07130a; border: none; border-radius: 7px; padding: 7px 16px; font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0; transition: all 0.2s; }
   .dl-btn:hover { background: var(--accent-dim); }
   .dl-btn:disabled { background: var(--border-strong); color: var(--text-faint); cursor: not-allowed; }
-
+  .dl-copy { background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); border-radius: 7px; padding: 7px 10px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .dl-copy:hover { border-color: var(--blue); color: var(--blue); }
   .lib-list { max-height: 420px; overflow-y: auto; border-radius: 9px; }
   .lib-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; font-size: 12px; }
   .lib-item:hover { background: var(--bg-hover); }
   .lib-name { font-family: var(--mono); color: var(--text-dim); flex: 1; word-break: break-all; }
+  .lib-native { font-size: 10px; color: var(--orange); border: 1px solid rgba(227,179,65,.3); border-radius: 4px; padding: 0 5px; }
+  .lib-actions { display: flex; gap: 6px; flex-shrink: 0; }
   .lib-dl { background: transparent; color: var(--blue); border: 1px solid rgba(88,166,255,.35); border-radius: 6px; padding: 3px 10px; font-size: 11px; cursor: pointer; transition: all 0.2s; }
   .lib-dl:hover { background: rgba(88,166,255,.1); }
-  .lib-dl:disabled { border-color: var(--border-strong); color: var(--text-faint); cursor: not-allowed; }
-
-  .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--border-strong); border-top-color: var(--accent); animation: spin .7s linear infinite; margin: 0 auto; }
+  .lib-copy { background: transparent; color: var(--text-faint); border: 1px solid var(--border-strong); border-radius: 6px; padding: 3px 8px; font-size: 11px; cursor: pointer; }
+  .lib-copy:hover { color: var(--text-dim); }
+  .obj-box { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 14px 16px; }
+  .obj-summary { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
+  .obj-summary strong { color: var(--text); }
+  .obj-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .loader-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+  .loader-card { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .loader-head { display: flex; align-items: center; gap: 8px; }
+  .loader-name { font-weight: 700; font-size: 13px; }
+  .loader-tag { font-size: 10px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--text-faint); margin-left: auto; }
+  .loader-row { display: flex; gap: 6px; }
+  .loader-select { flex: 1; min-width: 0; background: var(--bg-elev); color: var(--text); border: 1px solid var(--border-strong); border-radius: 6px; padding: 6px 8px; font-size: 12px; font-family: var(--mono); outline: none; }
+  .loader-select:focus { border-color: var(--accent); }
+  .loader-btn { background: var(--accent); color: #07130a; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .loader-btn:hover { background: var(--accent-dim); }
+  .loader-btn:disabled { background: var(--border-strong); color: var(--text-faint); cursor: not-allowed; }
+  .loader-note { font-size: 11px; color: var(--text-faint); }  .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--border-strong); border-top-color: var(--accent); animation: spin .7s linear infinite; margin: 0 auto; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-block { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; gap: 14px; color: var(--text-dim); font-size: 13px; }
   .error-box { background: rgba(248,81,73,.08); border: 1px solid rgba(248,81,73,.3); border-left: 3px solid #f85149; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #ffb3ae; }
   .error-box .retry { margin-top: 10px; background: transparent; color: #ffb3ae; border: 1px solid rgba(248,81,73,.4); border-radius: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; }
-
   footer { border-top: 1px solid var(--border); background: var(--bg-elev); padding: 18px 24px; font-size: 12px; color: var(--text-faint); text-align: center; line-height: 1.8; }
   footer strong { color: var(--text-dim); }
   footer .sep { color: var(--border-strong); margin: 0 6px; }
@@ -102,8 +122,25 @@
   .afdian-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(148,108,230,.5); }
   .afdian-ico { font-size: 15px; }
   .support-tip { margin: 0; font-size: 12px; color: var(--text-faint); }
-
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 200; opacity: 0; visibility: hidden; transition: opacity .22s, visibility .22s; }
+  .guide-link { font-size: 12px; color: var(--blue); background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.3); padding: 4px 12px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s; }
+  .guide-link:hover { background: rgba(88,166,255,.18); border-color: rgba(88,166,255,.5); text-decoration: none; }
+  .header-inner .guide-link, .header-inner .badge-source { margin-left: 0; }
+  .doc-modal { max-width: 860px; }
+  .doc-body { padding: 24px 30px; overflow-y: auto; font-size: 14px; line-height: 1.8; color: var(--text-dim); }
+  .doc-body h1 { font-size: 22px; color: var(--text); margin: 0 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .doc-body h2 { font-size: 17px; color: var(--text); margin: 26px 0 10px; padding-left: 11px; border-left: 3px solid var(--accent); }
+  .doc-body h3 { font-size: 14px; color: var(--text); margin: 18px 0 8px; }
+  .doc-body p { margin: 0 0 10px; }
+  .doc-body ol, .doc-body ul { margin: 0 0 12px; padding-left: 24px; }
+  .doc-body li { margin-bottom: 5px; }
+  .doc-body strong { color: var(--text); }
+  .doc-body code { font-family: var(--mono); font-size: 12.5px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: var(--orange); }
+  .doc-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 0 0 12px; }
+  .doc-body pre code { background: none; border: none; padding: 0; color: var(--text-dim); }
+  .doc-body table { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-size: 13px; }
+  .doc-body th, .doc-body td { border: 1px solid var(--border); padding: 7px 10px; text-align: left; }
+  .doc-body th { background: var(--bg); color: var(--text); font-weight: 700; }
+  .doc-body hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 200; opacity: 0; visibility: hidden; transition: opacity .22s, visibility .22s; }
   .modal-overlay.open { opacity: 1; visibility: visible; }
   .modal { background: var(--bg-elev); border: 1px solid var(--border-strong); border-radius: 12px; width: 100%; max-width: 720px; max-height: 82vh; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,.7); transform: translateY(18px) scale(.98); transition: transform .22s; }
   .modal-overlay.open .modal { transform: translateY(0) scale(1); }
@@ -126,33 +163,32 @@
   .modal-agree:hover { background: var(--accent-dim); }
   .modal-agree:active { transform: scale(.97); }
   @media (max-width: 600px) { .modal-head, .modal-body, .modal-foot { padding-left: 16px; padding-right: 16px; } .modal { max-height: 88vh; } }
-
   #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg-hover); color: var(--text); border: 1px solid var(--border-strong); padding: 10px 20px; border-radius: 8px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.4); opacity: 0; transition: all .25s; pointer-events: none; z-index: 100; }
   #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   @media (prefers-reduced-motion: reduce) { .modal, .modal-overlay, #toast { transition: none !important; } }
 </style>
-</head>
-<body>
-
+</head><body>
 <header>
   <div class="header-inner">
     <div class="logo"><div class="logo-mark">M</div><span>Minecraft 版本索引</span></div>
-    <span class="badge-source" id="sourceBadge">多源加速</span>
+    <div class="header-actions">
+      <a class="guide-link" id="openGuideDoc" title="使用指南">&#128214; 使用指南</a>
+      <a class="guide-link" href="https://github.com/jixiang32323/minecraft_search" target="_blank" rel="noopener" title="GitHub 仓库">&#128187; GitHub</a>
+      <span class="badge-source" id="sourceBadge">多源加速</span>
+    </div>
   </div>
 </header>
-
 <div class="notice">
   <div class="notice-box">
     <strong>版权提示：</strong>《我的世界》游戏版权归 Mojang AB 所有。本站仅提供由 BMCLAPI 加速的下载链接，<strong>请确保您已通过官方渠道购买正版授权</strong>。下载加速由 <a href="https://bmclapi2.bangbang93.com" target="_blank" rel="noopener">BMCLAPI</a> 提供。
-    <a href="#" id="openDisclaimer" class="disclaimer-link">查看完整免责声明 ›</a>
+    <a href="#" id="openDisclaimer" class="disclaimer-link">查看完整免责声明 &#8250;</a>
   </div>
 </div>
-
 <main>
   <aside class="sidebar">
     <div class="sidebar-head">
       <div class="search-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">&#128269;</span>
         <input id="search" type="search" placeholder="搜索版本号，如 1.20 / 23w31a" autocomplete="off">
       </div>
       <div class="filters" id="filters">
@@ -166,38 +202,159 @@
       <li class="loading-block"><div class="spinner"></div>正在连接镜像源…</li>
     </ul>
   </aside>
-
   <section class="detail" id="detail">
     <div class="empty-state">
-      <div class="icon">⛏️</div>
+      <div class="icon">&#9935;</div>
       <h2>请选择一个版本</h2>
       <p>从左侧列表中选择版本以查看可下载的文件</p>
     </div>
   </section>
 </main>
-
 <footer>
   <div class="support-wrap">
-    <a class="afdian-btn" href="https://afdian.com/a/你的爱发电ID" target="_blank" rel="noopener noreferrer" title="如果本站对你有帮助，欢迎请我喝杯咖啡 ☕">
-      <span class="afdian-ico">⚡</span><span>为爱发电</span>
+    <a class="afdian-btn" href="https://ifdian.net/a/xiaoxin_minecraft" target="_blank" rel="noopener noreferrer" title="如果本站对你有帮助，欢迎请我喝杯咖啡 &#9749;">
+      <span class="afdian-ico">&#9889;</span><span>为爱发电</span>
     </a>
-    <p class="support-tip">如果这个站点帮你省下了找资源的时间，可以请我喝杯咖啡 ☕</p>
+    <p class="support-tip">如果这个站点帮你省下了找资源的时间，可以请我喝杯咖啡 &#9749;</p>
   </div>
   <div class="footer-meta">
-    <strong>数据来源：</strong>BMCLAPI / HKMC
+    <strong>数据来源：</strong>BMCLAPI / 镜像站
     <span class="sep">|</span>
     <strong>游戏版权：</strong>Mojang AB / Microsoft
   </div>
   <div class="footer-meta">本页面仅作为正版用户的下载加速辅助工具，不存储任何游戏文件。</div>
 </footer>
-
 <div id="toast"></div>
+<div class="modal-overlay" id="docModal" aria-hidden="true">
+  <div class="modal doc-modal" role="dialog" aria-modal="true">
+    <div class="modal-head"><h2>&#128214; 如何使用版本查找指南</h2><button class="modal-close" id="closeDoc" aria-label="关闭">&#10005;</button></div>
+    <div class="modal-body doc-body">
+      <h1>如何使用版本查找指南</h1>
 
+      <h2>一、先确定你要做什么</h2>
+      <p>本站提供三种文件，<strong>用途完全不同，别下错</strong>：</p>
+      <table>
+        <tr><th>你想做什么</th><th>需要下载</th><th>说明</th></tr>
+        <tr><td>自己玩（单机/进别人服）</td><td>版本元数据 version.json + 客户端 Client</td><td>两个都要，导入启动器后自动补全</td></tr>
+        <tr><td>开服务器（让别人连你）</td><td>服务端 Server（server.jar）</td><td>一个就够，不用下客户端</td></tr>
+        <tr><td>两样都要</td><td>上面三样全下</td><td>玩自己的服最常见</td></tr>
+      </table>
+      <h3>只想玩游戏</h3>
+      <p>下载 <strong>version.json</strong> 和 <strong>client.jar</strong> 两个文件，按第三章导入 HMCL 或 PCL2 即可开玩。</p>
+      <h3>只想开服务器</h3>
+      <p>下载 <strong>server.jar</strong> 一个文件即可。放到空文件夹里，命令行运行：</p>
+      <pre><code>java -Xmx2G -Xms2G -jar server.jar nogui</code></pre>
+      <p>首次启动会生成 eula.txt，把里面的 <code>eula=false</code> 改成 <code>eula=true</code>，再启动一次才真正开服。</p>
+      <p>注意：本站提供的是<strong>官方原版服务端</strong>，不支持插件。要装插件请用 Paper，要装模组请用 Forge/Fabric 服务端。客户端要连自己的服，必须下载<strong>相同版本</strong>的客户端。</p>
+      <h3>自己开服自己玩</h3>
+      <p>三样都下载：先用 server.jar 开服，再用 version.json + client.jar 导入启动器进游戏，连接 <code>127.0.0.1</code> 即可。</p>
+
+      <h2>二、怎么下载</h2>
+      <ol>
+        <li>左侧列表选一个版本（正式版建议选最新的，模组推荐 <strong>1.20.1</strong>）</li>
+        <li>右侧「游戏本体」区块会看到两个下载项：<br><strong>版本元数据 version.json</strong>、<strong>客户端 Client（client.jar）</strong></li>
+        <li>两个都下载下来，放在<strong>同一个文件夹</strong>里</li>
+        <li>文件名保持默认，不要改</li>
+      </ol>
+      <p>就这两个文件，不用管库文件和资源索引。</p>
+
+      <h2>三、怎么导入启动器</h2>
+      <h3>HMCL</h3>
+      <ol>
+        <li>打开 HMCL，点左侧「版本列表」</li>
+        <li>点右上角「安装新游戏版本」</li>
+        <li>切到「从本地安装」标签</li>
+        <li>选择刚下载的 <strong>version.json</strong></li>
+        <li>HMCL 会自动识别，并联网补全库文件与材质音效</li>
+        <li>等待完成，回主页点启动</li>
+      </ol>
+      <h3>PCL2</h3>
+      <ol>
+        <li>打开 PCL2，点「下载」→「本地导入」</li>
+        <li>选择 <strong>version.json</strong></li>
+        <li>等待补全完成，回主页启动</li>
+      </ol>
+      <h3>官方启动器</h3>
+      <p>不推荐。官方启动器不支持本地导入，需要手动放到 <code>.minecraft/versions/</code> 目录，步骤繁琐且容易出错。</p>
+
+      <h2>四、Java 版本必须对应</h2>
+      <p>装错 Java 是启动失败最常见的原因：</p>
+      <table>
+        <tr><th>游戏版本</th><th>需要 Java</th></tr>
+        <tr><td>1.20.5 及以上</td><td>Java 21</td></tr>
+        <tr><td>1.17 ~ 1.20.4</td><td>Java 17</td></tr>
+        <tr><td>1.16.5 及以下</td><td>Java 8</td></tr>
+      </table>
+      <p>HMCL 和 PCL2 都支持在设置里指定 Java 路径，也可以在启动器内直接下载对应 Java。</p>
+
+      <h2>五、首次导入会发生什么</h2>
+      <p>导入后启动器需要联网补全两样东西：</p>
+      <ul>
+        <li><strong>库文件 libraries</strong>：几百个小 jar，约 30-50MB</li>
+        <li><strong>资源文件 assets</strong>：材质、音效、语言包，约 300-500MB</li>
+      </ul>
+      <p>补全是一次性的，完成后可以完全离线游玩。网络慢时耐心等，或换个时间段。</p>
+
+      <h2>六、要装模组怎么办</h2>
+      <p>版本详情页有「模组加载器」区块，四种可选：</p>
+      <table>
+        <tr><th>加载器</th><th>适合场景</th></tr>
+        <tr><td>Forge</td><td>老牌模组、大型整合包</td></tr>
+        <tr><td>NeoForge</td><td>Forge 分支，1.20.1 之后的新模组</td></tr>
+        <tr><td>Fabric</td><td>轻量模组、性能优化类（如 Sodium）</td></tr>
+        <tr><td>Quilt</td><td>Fabric 分支，模组较少</td></tr>
+      </table>
+      <p>操作：下拉选版本 → 点下载拿到 installer（安装器）。</p>
+      <ul>
+        <li><strong>Forge / NeoForge</strong>：双击 installer，选「Install client」，它会自动下载对应版本</li>
+        <li><strong>Fabric / Quilt</strong>：本站提供的是服务端 jar，客户端请去官网用 installer</li>
+      </ul>
+      <p>装完模组加载器后，模组文件（.jar）放进 <code>.minecraft/mods/</code> 目录即可。</p>
+      <p>注意：加载器版本必须和游戏版本对应。1.20.1 的 Forge 只能装在 1.20.1 上。</p>
+
+      <h2>七、常见问题</h2>
+      <h3>为什么只要下载两个文件？</h3>
+      <p>因为启动器会自动补全库文件和资源文件。本站提供最关键的两样：版本描述和主程序，其余交给启动器联网下载，避免你下几百 MB。</p>
+      <h3>导入后启动器提示版本损坏？</h3>
+      <p>检查两个文件是否在同一文件夹，且文件名没被改过。version.json 必须是启动器识别的那个文件，不能改成别的名字。</p>
+      <h3>启动后黑屏或紫黑方块？</h3>
+      <p>资源文件没补全完。等启动器下载完 assets，或检查网络。</p>
+      <h3>启动报 Java 版本错误？</h3>
+      <p>对照第四节的表格，装对应版本的 Java，在启动器设置里指定路径。</p>
+      <h3>下载的文件名是 client 而不是 client-1.20.1.jar？</h3>
+      <p>跨域下载时浏览器会忽略文件名设置，手动改名即可，但导入启动器只需要 version.json。</p>
+      <h3>模组加载器一直显示加载中？</h3>
+      <p>检查 functions/api/[[path]].js 是否部署成功。浏览器访问 你的域名/api/bmcl/mc/game/version_manifest_v2.json ，能返回内容就正常。</p>
+      <h3>数据来自哪里？</h3>
+      <p>版本元数据与主程序来自 Mojang 官方，下载由 BMCLAPI 加速，模组加载器版本来自 BMCLAPI 镜像。</p>
+
+      <h2>八、版权说明</h2>
+      <p>《我的世界》版权归 Mojang AB 所有。本站仅提供下载加速，不存储任何游戏文件，请确保已购买正版。</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="guideModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head"><h2>&#128218; 安装指引</h2><button class="modal-close" id="closeGuide" aria-label="关闭">&#10005;</button></div>
+    <div class="modal-body">
+      <h3>需要下载的文件</h3>
+      <p>在「游戏本体」区块下载两个文件：<strong>version.json</strong> 与 <strong>client.jar</strong>。两者必须放在同一个文件夹里，文件名保持默认，不要改名。</p>
+      <h3>HMCL 操作步骤</h3>
+      <p>1. 打开 HMCL，点左侧「版本列表」<br>2. 点右上角「安装新游戏版本」<br>3. 切到「从本地安装」标签<br>4. 选择刚才下载的 <strong>version.json</strong><br>5. HMCL 会自动识别并补全 libraries、assets，等待完成即可启动</p>
+      <h3>PCL2 操作步骤</h3>
+      <p>1. 打开 PCL2，点「下载」→「本地导入」<br>2. 选择 <strong>version.json</strong><br>3. 等待补全完成，回主页启动</p>
+      <h3>注意事项</h3>
+      <p>首次导入后启动器需要联网补全材质与音效（约 300-500MB），请保持网络畅通。补全完成后即可离线游玩。</p>
+      <h3>Java 版本要求</h3>
+      <p>1.20.5 及以上需要 Java 21；1.17 至 1.20.4 需要 Java 17；1.16.5 及以下需要 Java 8。</p>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="disclaimerModal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
     <div class="modal-head">
-      <h2 id="disclaimerTitle">⚖️ 免责声明</h2>
-      <button class="modal-close" id="closeDisclaimer" aria-label="关闭">✕</button>
+      <h2 id="disclaimerTitle">&#9878; 免责声明</h2>
+      <button class="modal-close" id="closeDisclaimer" aria-label="关闭">&#10005;</button>
     </div>
     <div class="modal-body">
       <p class="modal-updated">最后更新：2025 年 10 月</p>
@@ -221,113 +378,88 @@
       <button class="modal-agree" id="agreeDisclaimer">我已知晓并继续使用</button>
     </div>
   </div>
-</div>
-
-<script>
+</div><script>
 (() => {
   'use strict';
-
-  // 镜像源列表
-  const MIRRORS = [
-    'https://bmclapi2.bangbang93.com',
-    'https://bsmirror.hkmc.online',
-    'https://mirror.hkmc.online',
-    'https://download.mcbbs.net'
-  ];
-  let activeMirror = MIRRORS[0];
+  // 元数据源：官方 Mojang 带 CORS(*)，浏览器可直接 fetch
+  const META_SOURCES = ['https://launchermeta.mojang.com', 'https://piston-meta.mojang.com'];
+  // 下载加速镜像（无 CORS，用直链导航下载，不走 fetch）
+  const DL_MIRROR = 'https://bmclapi2.bangbang93.com';
   const DISCLAIMER_KEY = 'mc_disclaimer_agreed_v1';
+  const MANIFEST_PATH = '/mc/game/version_manifest_v2.json';
 
-  const state = {
-    versions: [], filter: 'all', keyword: '', selectedId: null,
-    detailCache: new Map(), latest: { release: '', snapshot: '' },
-  };
-
+  const state = { versions: [], filter: 'all', keyword: '', selectedId: null, detailCache: new Map(), assetObjCache: new Map(), latest: { release: '', snapshot: '' } };
   const TYPE_LABEL = { release: '正式版', snapshot: '快照', old_beta: '远古 Beta', old_alpha: '远古 Alpha' };
   const $ = (id) => document.getElementById(id);
-  const versionListEl = $('versionList');
-  const detailEl = $('detail');
-  const searchEl = $('search');
-  const filtersEl = $('filters');
-  const sourceBadge = $('sourceBadge');
-
-  function toMirrorUrl(u) {
-    if (!u) return '';
-    const officialDomains = [
-      'https://launchermeta.mojang.com/',
-      'https://launcher.mojang.com/',
-      'https://piston-meta.mojang.com/',
-      'https://resources.download.minecraft.net/',
-      'https://libraries.minecraft.net/',
-      'https://files.minecraftforge.net/maven/',
-      'https://maven.minecraftforge.net/',
-      'https://maven.neoforged.net/releases/'
-    ];
-    for (const d of officialDomains) {
-      if (u.startsWith(d)) {
-        let path = u.replace(d, '');
-        if (d.includes('resources.download.minecraft.net')) return `${activeMirror}/assets/${path}`;
-        if (d.includes('maven') || d.includes('forge')) return `${activeMirror}/maven/${path}`;
-        return `${activeMirror}/${path}`;
-      }
-    }
-    return u;
-  }
+  const versionListEl = $('versionList'), detailEl = $('detail'), searchEl = $('search'), filtersEl = $('filters'), sourceBadge = $('sourceBadge');
 
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
   function basename(u) { try { return decodeURIComponent(new URL(u).pathname.split('/').pop() || 'file'); } catch { return 'file'; } }
-  
-  function toast(msg, duration = 2200) { 
-    const el = $('toast'); 
-    el.textContent = msg; 
-    el.classList.add('show'); 
-    clearTimeout(el._t); 
-    el._t = setTimeout(() => el.classList.remove('show'), duration); 
-  }
+  function toast(msg, d = 2200) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), d); }
+  function fmtSize(b) { if (b == null) return ''; if (b >= 1048576) return (b / 1048576).toFixed(2) + ' MB'; if (b >= 1024) return (b / 1024).toFixed(1) + ' KB'; return b + ' B'; }
 
-  async function robustFetch(endpointPath) {
-    let lastErr;
-    for (const mirror of MIRRORS) {
-      try {
-        const url = `${mirror}${endpointPath}`;
-        const resp = await fetch(url, { signal: AbortSignal.timeout(8000) });
-        if (resp.ok) {
-          activeMirror = mirror; 
-          sourceBadge.textContent = mirror.includes('bangbang93') ? 'BMCLAPI 加速' : (mirror.includes('hkmc') ? 'HKMC 加速' : 'MCBBS 加速');
-          return resp;
-        }
-        throw new Error('HTTP ' + resp.status);
-      } catch (e) {
-        lastErr = e;
-        console.warn(`[镜像失败] ${mirror}:`, e.message);
-      }
-    }
-    throw new Error(`所有镜像均不可用 (${lastErr.message})`);
+  // 官方 URL → BMCLAPI 下载直链
+  function toDlUrl(u) {
+    if (!u) return '';
+    try {
+      const p = new URL(u).pathname.replace(/^\/+/, '');
+      if (u.startsWith('https://resources.download.minecraft.net/')) return DL_MIRROR + '/assets/' + p;
+      if (u.startsWith('https://libraries.minecraft.net/')) return DL_MIRROR + '/maven/' + p;
+      return DL_MIRROR + '/' + p;
+    } catch { return u; }
+  }
+  // 客户端/服务端 jar 的 BMCLAPI 原生路径
+  function dlJar(id, kind) { return DL_MIRROR + '/version/' + id + '/' + kind; }
+
+  async function fetchJson(url) {
+    const resp = await fetch(url, { signal: AbortSignal.timeout(20000) });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
   }
 
   async function getManifest() {
-    const resp = await robustFetch('/mc/game/version_manifest_v2.json');
-    return await resp.json();
+    let lastErr;
+    for (const base of META_SOURCES) {
+      try { const d = await fetchJson(base + MANIFEST_PATH); sourceBadge.textContent = '官方源'; return d; }
+      catch (e) { lastErr = e; }
+    }
+    try { const d = await fetchJson(DL_MIRROR + MANIFEST_PATH); sourceBadge.textContent = 'BMCLAPI'; return d; }
+    catch (e) { lastErr = e; }
+    throw new Error('元数据源不可用 (' + (lastErr ? lastErr.message : 'unknown') + ')');
   }
 
   async function getVersionDetail(id) {
     const entry = state.versions.find(v => v.id === id);
     if (!entry || !entry.url) throw new Error('版本不存在');
-    const resp = await robustFetch(new URL(entry.url).pathname);
-    const meta = await resp.json();
-
-    return {
-      id, type: entry.type,
-      downloads: {
-        client: meta.downloads?.client?.url ? toMirrorUrl(meta.downloads.client.url) : null,
-        server: meta.downloads?.server?.url ? toMirrorUrl(meta.downloads.server.url) : null,
-      },
-      assetIndex: meta.assetIndex?.url ? { url: toMirrorUrl(meta.assetIndex.url), id: meta.assetIndex.id } : null,
-      libraries: (meta.libraries || [])
-        .map(l => ({ name: l.name, url: l.downloads?.artifact?.url ? toMirrorUrl(l.downloads.artifact.url) : null }))
-        .filter(l => l.url),
-    };
+    const meta = await fetchJson(entry.url);
+    const downloads = {};
+    if (meta.downloads?.client?.url) downloads.client = { url: dlJar(id, 'client'), fallback: meta.downloads.client.url, size: meta.downloads.client.size };
+    if (meta.downloads?.server?.url) downloads.server = { url: dlJar(id, 'server'), fallback: meta.downloads.server.url, size: meta.downloads.server.size };
+    let assetIndex = null;
+    if (meta.assetIndex?.url) assetIndex = { url: meta.assetIndex.url, fallback: toDlUrl(meta.assetIndex.url), official: meta.assetIndex.url, id: meta.assetIndex.id, size: meta.assetIndex.size, totalSize: meta.assetIndex.totalSize };
+    const libraries = [];
+    for (const l of (meta.libraries || [])) {
+      const a = l.downloads?.artifact;
+      if (a?.url) libraries.push({ name: l.name, url: a.url, fallback: toDlUrl(a.url), kind: 'artifact', size: a.size });
+      const cls = l.downloads?.classifiers || {};
+      for (const k of Object.keys(cls)) {
+        if (cls[k]?.url) libraries.push({ name: l.name + ' [' + k + ']', url: cls[k].url, fallback: toDlUrl(cls[k].url), kind: k.includes('natives') ? 'native' : 'classifier', size: cls[k].size });
+      }
+    }
+    return { id, type: entry.type, downloads, assetIndex, libraries, versionJson: entry.url };
   }
 
+  async function getAssetObjects(indexUrl) {
+    if (state.assetObjCache.has(indexUrl)) return state.assetObjCache.get(indexUrl);
+    const data = await fetchJson(indexUrl);
+    const objects = Object.keys(data.objects || {}).map(k => {
+      const o = data.objects[k];
+      return { path: k, hash: o.hash, size: o.size, url: DL_MIRROR + '/assets/' + o.hash.slice(0, 2) + '/' + o.hash };
+    });
+    const result = { objects, total: objects.reduce((s, o) => s + (o.size || 0), 0) };
+    state.assetObjCache.set(indexUrl, result);
+    return result;
+  }
   function renderList() {
     const kw = state.keyword.trim().toLowerCase();
     const filtered = state.versions.filter(v => {
@@ -336,74 +468,170 @@
       if (state.filter === 'old') return v.type === 'old_beta' || v.type === 'old_alpha';
       return v.type === state.filter;
     });
-    if (!filtered.length) { versionListEl.innerHTML = `<li class="loading-block" style="min-height:120px">没有匹配的版本</li>`; return; }
+    if (!filtered.length) { versionListEl.innerHTML = '<li class="loading-block" style="min-height:120px">没有匹配的版本</li>'; return; }
     versionListEl.innerHTML = filtered.map(v => {
       const isLatest = v.id === state.latest.release || v.id === state.latest.snapshot;
       const sel = v.id === state.selectedId ? ' selected' : '';
-      return `<li class="version-item${sel}" data-id="${escapeHtml(v.id)}">
-        <span class="v-id">${escapeHtml(v.id)}</span>
-        ${isLatest ? '<span class="v-latest-star">★</span>' : ''}
-        <span class="v-type ${v.type}">${TYPE_LABEL[v.type] || v.type}</span>
-      </li>`;
+      return '<li class="version-item' + sel + '" data-id="' + escapeHtml(v.id) + '">' +
+        '<span class="v-id">' + escapeHtml(v.id) + '</span>' +
+        (isLatest ? '<span class="v-latest-star">★</span>' : '') +
+        '<span class="v-type ' + v.type + '">' + (TYPE_LABEL[v.type] || v.type) + '</span></li>';
     }).join('');
   }
 
-  function renderLoading() { detailEl.innerHTML = `<div class="loading-block"><div class="spinner"></div>正在获取版本详情…</div>`; }
+  function renderLoading() { detailEl.innerHTML = '<div class="loading-block"><div class="spinner"></div>正在获取版本详情…</div>'; }
   function renderError(msg, id) {
-    detailEl.innerHTML = `<div class="error-box">
-      <div>加载版本 <code>${escapeHtml(id)}</code> 失败：${escapeHtml(msg)}</div>
-      <button class="retry" id="retryBtn">重新加载</button>
-    </div>`;
+    detailEl.innerHTML = '<div class="error-box"><div>加载版本 <code>' + escapeHtml(id) + '</code> 失败：' + escapeHtml(msg) + '</div><button class="retry" id="retryBtn">重新加载</button></div>';
     $('retryBtn')?.addEventListener('click', () => loadDetail(id, true));
   }
-  
-  // 修改为 button，通过 data 属性传递 URL 和文件名
-  function dlCard(icon, title, sub, url, downloadName) {
-    return `<div class="dl-card">
-      <div class="dl-icon">${icon}</div>
-      <div class="dl-info"><div class="dl-name">${escapeHtml(title)}</div><div class="dl-sub">${escapeHtml(sub)}</div></div>
-      <button class="dl-btn" data-url="${url}" data-name="${encodeURIComponent(downloadName)}">下载</button>
-    </div>`;
+
+  function dlCard(icon, title, sub, url, downloadName, size, fallback) {
+    const sz = size ? ' · ' + fmtSize(size) : '';
+    return '<div class="dl-card">' +
+      '<div class="dl-icon">' + icon + '</div>' +
+      '<div class="dl-info"><div class="dl-name">' + escapeHtml(title) + '</div><div class="dl-sub">' + escapeHtml(sub) + sz + '</div></div>' +
+      '<div class="dl-actions">' +
+      '<button class="dl-copy" data-url="' + escapeHtml(url) + '">复制直链</button>' +
+      '<button class="dl-btn" data-url="' + escapeHtml(url) + '" data-fallback="' + escapeHtml(fallback || '') + '" data-name="' + encodeURIComponent(downloadName) + '">加速下载</button>' + (fallback ? '<button class="dl-copy" data-url="' + escapeHtml(fallback) + '">官方源</button>' : '') +
+      '</div><div class="dl-progress"><div></div></div></div>';
   }
-  
+
   function renderDetail(v) {
-    const libs = (v.libraries || []).filter(l => l.url);
-    const head = `<div class="detail-head">
-      <div style="flex:1;min-width:0">
-        <div class="detail-title">${escapeHtml(v.id)}</div>
-        <div class="detail-meta">
-          <span>${TYPE_LABEL[v.type] || v.type}</span>
-          <span>库文件 ${libs.length} 个</span>
-          ${v.assetIndex?.id ? `<span>资源索引 ${escapeHtml(v.assetIndex.id)}</span>` : ''}
-        </div>
-      </div>
-      <span class="v-type ${v.type}">${TYPE_LABEL[v.type] || v.type}</span>
-    </div>`;
+    const libs = v.libraries || [];
+    const natives = libs.filter(l => l.kind === 'native').length;
+    const head = '<div class="detail-head"><div style="flex:1;min-width:0">' +
+      '<div class="detail-title">' + escapeHtml(v.id) + '</div>' +
+      '<div class="detail-meta"><span>' + (TYPE_LABEL[v.type] || v.type) + '</span><span>库文件 ' + libs.length + ' 个</span>' +
+      (v.assetIndex?.id ? '<span>资源索引 ' + escapeHtml(v.assetIndex.id) + '</span>' : '') + '</div></div>' +
+      '<span class="v-type ' + v.type + '">' + (TYPE_LABEL[v.type] || v.type) + '</span></div>';
+
     let core = '';
-    if (v.downloads?.client) core += dlCard('🎮', '客户端 Client', basename(v.downloads.client), v.downloads.client, `client-${v.id}.jar`);
-    if (v.downloads?.server) core += dlCard('🖥️', '服务端 Server', basename(v.downloads.server), v.downloads.server, `server-${v.id}.jar`);
-    if (!core) core = `<div class="error-box">该版本未提供客户端/服务端下载。</div>`;
+    if (v.versionJson) core += dlCard('&#128196;', '版本元数据 version.json', v.id + '.json', API + '/piston' + new URL(v.versionJson).pathname, v.id + '.json', null);
+    if (v.downloads?.client) core += dlCard('&#127918;', '客户端 Client', basename(v.downloads.client.url), v.downloads.client.url, 'client-' + v.id + '.jar', v.downloads.client.size, v.downloads.client.fallback);
+    if (v.downloads?.server) core += dlCard('&#128421;', '服务端 Server', basename(v.downloads.server.url), v.downloads.server.url, 'server-' + v.id + '.jar', v.downloads.server.size, v.downloads.server.fallback);
+    if (!core) core = '<div class="error-box">该版本未提供客户端/服务端下载。</div>';
 
     let asset = '';
-    if (v.assetIndex?.url) asset = dlCard('📦', `资源索引 ${escapeHtml(v.assetIndex.id || '')}`, basename(v.assetIndex.url), v.assetIndex.url, `assets-${v.id}.json`);
-
-    let libHtml = '';
-    if (libs.length) {
-      libHtml = `<div class="lib-list">${libs.map(l => `
-        <div class="lib-item">
-          <span class="lib-name">${escapeHtml(l.name || basename(l.url))}</span>
-          <button class="lib-dl" data-url="${l.url}" data-name="${encodeURIComponent(basename(l.url))}">下载</button>
-        </div>`).join('')}</div>`;
-    } else {
-      libHtml = `<div style="color:var(--text-faint);font-size:12px">无库文件</div>`;
+    if (v.assetIndex?.url) {
+      asset = dlCard('&#128230;', '资源索引 ' + (v.assetIndex.id || ''), basename(v.assetIndex.url), v.assetIndex.url, 'assets-' + v.id + '.json', v.assetIndex.size, v.assetIndex.fallback);
+      asset += '<div class="obj-box" style="margin-top:8px"><div class="obj-summary">资源对象：点击「统计」获取文件数与总大小，可按需逐个下载。</div>' +
+        '<div class="obj-actions"><button class="lib-dl" id="objStatsBtn">统计资源对象</button></div>' +
+        '<div id="objStats" style="margin-top:10px;font-size:12px;color:var(--text-dim)"></div></div>';
     }
 
-    detailEl.innerHTML = `${head}
-      <div class="section"><div class="section-title">游戏本体</div>${core}</div>
-      ${asset ? `<div class="section"><div class="section-title">资源索引</div>${asset}</div>` : ''}
-      <div class="section"><div class="section-title">库文件 <span class="section-count">${libs.length}</span></div>${libHtml}</div>`;
+    let libHtml = libs.length ? '<div class="lib-list">' + libs.map(l =>
+      '<div class="lib-item"><span class="lib-name">' + escapeHtml(l.name || basename(l.url)) + '</span>' +
+      (l.kind === 'native' ? '<span class="lib-native">natives</span>' : (l.kind === 'classifier' ? '<span class="lib-native">classifier</span>' : '')) +
+      '<span class="lib-actions"><button class="lib-copy" data-url="' + escapeHtml(l.url) + '">复制</button>' +
+      '<button class="lib-dl" data-url="' + escapeHtml(l.url) + '" data-fallback="' + escapeHtml(l.fallback || '') + '" data-name="' + encodeURIComponent(basename(l.url)) + '">官方下载</button>' + (l.fallback ? '<button class="lib-copy" data-url="' + escapeHtml(l.fallback) + '">加速源</button>' : '') + '</span></div>'
+    ).join('') + '</div>' : '<div style="color:var(--text-faint);font-size:12px">无库文件</div>';
+
+    detailEl.innerHTML = head +
+      '<div class="section"><div class="section-title">游戏本体<span class="section-count" id="guideBtn" style="cursor:pointer;color:var(--blue)">安装指引</span></div>' + core + '</div>' +
+      (asset ? '<div class="section"><div class="section-title">资源索引</div>' + asset + '</div>' : '') +
+      '<div class="section"><div class="section-title">库文件 <span class="section-count">' + libs.length + '</span>' + (natives ? '<span class="section-count" style="color:var(--orange)">natives ' + natives + '</span>' : '') + '</div>' + libHtml + '</div>' + renderLoaders(v);    fillLoaderSelects(v.id);
+  }
+  // ===== 模组加载器 =====
+  const API = '/api';
+  const LOADERS = [
+    { id: 'forge', name: 'Forge', note: '经典模组加载器' },
+    { id: 'neoforge', name: 'NeoForge', note: 'Forge 社区分支' },
+    { id: 'fabric', name: 'Fabric', note: '轻量、更新快' },
+    { id: 'quilt', name: 'Quilt', note: 'Fabric 分支' }
+  ];
+  const loaderCache = new Map();
+
+  async function fetchLoaderVersions(mc, loaderId) {
+    const key = loaderId + '|' + mc;
+    if (loaderCache.has(key)) return loaderCache.get(key);
+    let list = [];
+    if (loaderId === 'forge') {
+      const data = await fetchJson(API + '/bmcl/forge/minecraft/' + encodeURIComponent(mc));
+      list = (data || []).map(v => ({ ver: v.version, build: v.build }));
+    } else if (loaderId === 'neoforge') {
+      const data = await fetchJson(API + '/bmcl/neoforge/list/' + encodeURIComponent(mc));
+      list = (data || []).map(v => ({ ver: v.version }));
+    } else if (loaderId === 'fabric') {
+      const data = await fetchJson(API + '/bmcl/fabric-meta/v2/versions/loader/' + encodeURIComponent(mc));
+      list = (data || []).map(v => ({ ver: v.loader?.version || v.version })).filter(x => x.ver);
+    } else if (loaderId === 'quilt') {
+      const data = await fetchJson(API + '/bmcl/quilt-meta/v3/versions/installer');
+      list = (data || []).map(v => ({ ver: v.version })).filter(x => x.ver);
+    }
+    loaderCache.set(key, list);
+    return list;
   }
 
+  function loaderDownloadUrl(mc, loaderId, ver, inst) {
+    if (loaderId === 'forge') {
+      const full = mc + '-' + ver;
+      return 'https://maven.minecraftforge.net/net/minecraftforge/forge/' + full + '/forge-' + full + '-installer.jar';
+    }
+    if (loaderId === 'neoforge') {
+      return 'https://maven.neoforged.net/releases/net/neoforged/neoforge/' + ver + '/neoforge-' + ver + '-installer.jar';
+    }
+    if (loaderId === 'fabric') {
+      return 'https://meta.fabricmc.net/v2/versions/loader/' + mc + '/' + ver + '/' + (inst || '1.1.1') + '/server/jar';
+    }
+    if (loaderId === 'quilt') {
+      return 'https://maven.quiltmc.org/repository/release/org/quiltmc/quilt-installer/' + ver + '/quilt-installer-' + ver + '.jar';
+    }
+    return '';
+  }
+  function renderLoaders(v) {
+    const mc = v.id;
+    return '<div class="section"><div class="section-title">模组加载器</div>' +
+      '<div class="loader-grid">' + LOADERS.map(l =>
+        '<div class="loader-card" data-loader="' + l.id + '">' +
+        '<div class="loader-head"><span class="loader-name">' + escapeHtml(l.name) + '</span><span class="loader-tag">' + escapeHtml(l.note) + '</span></div>' +
+        '<div class="loader-row"><select class="loader-select" data-mc="' + escapeHtml(mc) + '" data-loader="' + l.id + '"><option value="">加载中…</option></select>' +
+        '<button class="loader-btn" data-mc="' + escapeHtml(mc) + '" data-loader="' + l.id + '" disabled>下载</button></div>' +
+        '<div class="loader-note"></div></div>'
+      ).join('') + '</div></div>';
+  }
+
+  async function fillLoaderSelects(mc) {
+    for (const l of LOADERS) {
+      const sel = detailEl.querySelector('.loader-select[data-loader="' + l.id + '"]');
+      const btn = detailEl.querySelector('.loader-btn[data-loader="' + l.id + '"]');
+      const note = sel ? sel.closest('.loader-card').querySelector('.loader-note') : null;
+      if (!sel) continue;
+      try {
+        const list = await fetchLoaderVersions(mc, l.id);
+        if (!list.length) { sel.innerHTML = '<option value="">无可用版本</option>'; if (note) note.textContent = '该加载器不支持此版本'; continue; }
+        sel.innerHTML = list.map((x, i) => '<option value="' + escapeHtml(x.ver) + '">' + escapeHtml(x.ver) + (i === 0 ? ' (最新)' : '') + '</option>').join('');
+        if (btn) btn.disabled = false;
+        if (note) note.textContent = '共 ' + list.length + ' 个版本';
+      } catch (e) {
+        sel.innerHTML = '<option value="">获取失败</option>';
+        if (note) note.textContent = e.message;
+      }
+    }
+  }
+
+  async function getFabricInstallerVer() {
+    try {
+      const d = await fetchJson(API + '/bmcl/fabric-meta/v2/versions/installer');
+      return (d && d[0] && d[0].version) ? d[0].version : '1.1.1';
+    } catch { return '1.1.1'; }
+  }
+
+  async function onLoaderDownload(mc, loaderId, btn) {
+    const sel = detailEl.querySelector('.loader-select[data-loader="' + loaderId + '"]');
+    const ver = sel ? sel.value : '';
+    if (!ver) { toast('请先选择版本'); return; }
+    let inst = '';
+    if (loaderId === 'fabric') inst = await getFabricInstallerVer();
+    const url = loaderDownloadUrl(mc, loaderId, ver, inst);
+    if (!url) { toast('链接生成失败'); return; }
+    const name = loaderId === 'fabric'
+      ? ('fabric-server-' + mc + '-' + ver + '.jar')
+      : (loaderId + '-' + ver + '-installer.jar');
+    const a = document.createElement('a');
+    a.href = url; a.download = name; a.rel = 'noopener'; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast('开始下载 ' + name);
+  }
   async function loadVersions() {
     try {
       const data = await getManifest();
@@ -411,10 +639,8 @@
       state.latest = data.latest || { release: '', snapshot: '' };
       renderList();
     } catch (e) {
-      versionListEl.innerHTML = `<li class="loading-block" style="min-height:160px;color:#ffb3ae;text-align:center;padding:20px;">
-        版本列表加载失败<br><span style="font-size:11px;opacity:0.8;">${escapeHtml(e.message)}</span><br>
-        <button class="retry" onclick="location.reload()" style="margin-top:10px;background:transparent;color:#ffb3ae;border:1px solid rgba(248,81,73,.4);border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">重试</button>
-      </li>`;
+      versionListEl.innerHTML = '<li class="loading-block" style="min-height:160px;color:#ffb3ae;text-align:center;padding:20px">版本列表加载失败<br><span style="font-size:11px;opacity:.8">' + escapeHtml(e.message) + '</span><br><button class="retry" id="reloadBtn" style="margin-top:10px;background:transparent;color:#ffb3ae;border:1px solid rgba(248,81,73,.4);border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">重试</button></li>';
+      $('reloadBtn')?.addEventListener('click', () => { versionListEl.innerHTML = '<li class="loading-block"><div class="spinner"></div>正在连接镜像源…</li>'; loadVersions(); });
     }
   }
 
@@ -426,50 +652,46 @@
       const detail = await getVersionDetail(id);
       state.detailCache.set(id, detail);
       if (state.selectedId === id) renderDetail(detail);
-    } catch (e) {
-      if (state.selectedId === id) renderError(e.message, id);
-    }
+    } catch (e) { if (state.selectedId === id) renderError(e.message, id); }
   }
 
-  // === 核心修改：使用 Blob 强制下载 (解决跨域白屏乱码问题) ===
-  async function forceDownload(url, filename, btnEl) {
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); toast('已复制直链'); }
+    catch { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('已复制直链'); } catch { toast('复制失败，请手动复制'); } document.body.removeChild(ta); }
+  }
+
+  // 直链导航下载：BMCLAPI 无 CORS，无法用 fetch 读 body，用 a[download] 让浏览器原生下载
+  function navigateDownload(url, filename, btnEl) {
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.rel = 'noopener'; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+  function forceDownload(url, filename, btnEl) {
+    const fallback = btnEl.getAttribute('data-fallback') || '';
     const originalText = btnEl.textContent;
-    btnEl.textContent = '准备中...';
+    navigateDownload(url, filename, btnEl);
+    toast('下载已开始: ' + filename);
+    btnEl.textContent = '已开始';
     btnEl.disabled = true;
-
-    try {
-      // 尝试通过 fetch 获取流数据
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      
-      const blob = await response.blob();
-      const objectUrl = window.URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = objectUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(objectUrl);
-      
-      toast('下载已开始: ' + filename);
-      btnEl.textContent = '已开始';
-      setTimeout(() => { btnEl.textContent = originalText; btnEl.disabled = false; }, 2000);
-      
-    } catch (error) {
-      console.warn('Blob 下载失败，触发降级方案', error);
-      // 降级方案：直接通过浏览器原生跳转（虽可能白屏，但用户可手动保存）
-      window.open(url, '_blank');
-      toast('已在新窗口打开文件，请手动保存', 3500);
-      btnEl.textContent = originalText;
-      btnEl.disabled = false;
-    }
+    setTimeout(() => { btnEl.textContent = originalText; btnEl.disabled = false; }, 2000);
+    // 备用源由卡片上的独立按钮提供
   }
-
-  // 事件绑定
+  async function showObjStats() {
+    const v = state.detailCache.get(state.selectedId);
+    const box = $('objStats');
+    if (!v?.assetIndex?.official || !box) return;
+    box.textContent = '正在统计…';
+    try {
+      const r = await getAssetObjects(v.assetIndex.official);
+      box.innerHTML = '共 <strong>' + r.objects.length + '</strong> 个资源对象，总大小 <strong>' + fmtSize(r.total) + '</strong>。<br>' +
+        '<button class="lib-dl" id="objDlFirst" style="margin-top:8px">下载前 10 个（示例）</button>';
+      $('objDlFirst')?.addEventListener('click', async () => {
+        for (const o of r.objects.slice(0, 10)) { try { window.open(o.url, '_blank'); } catch {} await new Promise(s => setTimeout(s, 300)); }
+        toast('已打开前 10 个资源下载');
+      });
+    } catch (e) { box.textContent = '统计失败：' + e.message; }
+  }
   versionListEl.addEventListener('click', e => {
     const item = e.target.closest('.version-item');
     if (item && item.dataset.id !== state.selectedId) loadDetail(item.dataset.id);
@@ -486,61 +708,78 @@
     state.filter = btn.dataset.filter;
     renderList();
   });
-  
-  // 修改下载按钮的事件委托
   detailEl.addEventListener('click', e => {
+    const copyBtn = e.target.closest('.dl-copy, .lib-copy');
+    if (copyBtn) { copyText(copyBtn.getAttribute('data-url')); return; }
+    if (e.target.closest('#objStatsBtn')) { showObjStats(); return; }
+    if (e.target.closest('#guideBtn')) { openGuide(); return; }
+    const lb = e.target.closest('.loader-btn');
+    if (lb) { if (!lb.disabled) onLoaderDownload(lb.getAttribute('data-mc'), lb.getAttribute('data-loader'), lb); return; }
     const btn = e.target.closest('.dl-btn, .lib-dl');
-    if (!btn) return;
-    
-    // 防止重复点击
-    if (btn.disabled) return;
-    
+    if (!btn || btn.disabled || btn.id) return;
     const url = btn.getAttribute('data-url');
     const filename = decodeURIComponent(btn.getAttribute('data-name') || 'file');
-    
-    if (url) {
-      forceDownload(url, filename, btn);
-    }
+    if (url) forceDownload(url, filename, btn);
   });
 
-  // 免责声明逻辑
   function initDisclaimer() {
-    const modal = $('disclaimerModal');
-    const openBtn = $('openDisclaimer');
-    const closeBtn = $('closeDisclaimer');
-    const agreeBtn = $('agreeDisclaimer');
-    const foot = $('modalFoot');
+    const modal = $('disclaimerModal'), openBtn = $('openDisclaimer'), closeBtn = $('closeDisclaimer'), agreeBtn = $('agreeDisclaimer'), foot = $('modalFoot');
     if (!modal) return;
     let lastFocused = null;
-
     function open(auto) {
       lastFocused = document.activeElement;
       if (foot) foot.classList.toggle('show', !!auto);
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       (auto ? agreeBtn : closeBtn)?.focus();
     }
     function close(record) {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       if (record) { try { localStorage.setItem(DISCLAIMER_KEY, '1'); } catch {} }
       lastFocused?.focus();
     }
-
     openBtn?.addEventListener('click', e => { e.preventDefault(); open(false); });
     closeBtn?.addEventListener('click', () => close(true));
     agreeBtn?.addEventListener('click', () => close(true));
     modal.addEventListener('click', e => { if (e.target === modal) close(true); });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) close(true);
-    });
-
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(true); });
     let agreed = false;
     try { agreed = localStorage.getItem(DISCLAIMER_KEY) === '1'; } catch {}
     if (!agreed) setTimeout(() => open(true), 350);
   }
+
+  function openGuide() {
+    const m = $('guideModal');
+    if (!m) return;
+    m.classList.add('open'); m.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeGuide() {
+    const m = $('guideModal');
+    if (!m) return;
+    m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  $('closeGuide')?.addEventListener('click', closeGuide);
+  $('guideModal')?.addEventListener('click', e => { if (e.target.id === 'guideModal') closeGuide(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeGuide(); closeDoc(); } });
+
+  function openDoc() {
+    const m = $('docModal');
+    if (!m) return;
+    m.classList.add('open'); m.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDoc() {
+    const m = $('docModal');
+    if (!m) return;
+    m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  $('openGuideDoc')?.addEventListener('click', openDoc);
+  $('closeDoc')?.addEventListener('click', closeDoc);
+  $('docModal')?.addEventListener('click', e => { if (e.target.id === 'docModal') closeDoc(); });
 
   initDisclaimer();
   loadVersions();
